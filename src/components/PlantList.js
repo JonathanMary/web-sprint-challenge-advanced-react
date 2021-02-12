@@ -7,6 +7,8 @@ export default class PlantList extends Component {
     super();
     this.state = {
       plants: [],
+      display: [],
+      filter : "",
     }
   }
 
@@ -16,16 +18,42 @@ export default class PlantList extends Component {
   componentDidMount(){
     axios.get(`http://localhost:3333/plants`)
          .then(res => {
-           this.setState({plants: res.data.plantsData})
+           this.setState({
+             plants: res.data.plantsData,
+             display: res.data.plantsData,
+            })
+           //console.log(this.state.plants);
          })
          .catch(err => console.log(err))
+  }
+
+  filterInput = (evt) => {
+    this.setState({ filter: evt.target.value });
+  }
+
+  submit = (evt) => {
+    evt.preventDefault();
+    const temp = [...this.state.plants];
+    const filtered = temp.filter( plant => {
+      if(plant.name.toLowerCase().includes(this.state.filter.toLowerCase())){
+        return plant;
+      }
+    })
+    this.setState({ display: filtered });
   }
 
   /*********  DON'T CHANGE ANYTHING IN THE RENDER FUNCTION *********/
   render() {
     return (
+      <>
+      <form>
+        <div className="filter-input">
+          <input type="text" onChange={this.filterInput} placeholder="Filter by plant name..." />
+          <button type="submit" onClick={this.submit}>Submit</button>
+        </div>
+      </form>
       <main className="plant-list">
-        {this.state?.plants?.map((plant) => (
+        {this.state?.display?.map((plant) => (
           <div className="plant-card" key={plant.id} data-testid="plant-card">
             <img className="plant-image" src={plant.img} alt={plant.name} />
             <div className="plant-details">
@@ -47,6 +75,7 @@ export default class PlantList extends Component {
           </div>
         ))}
       </main>
+      </>
     );
   }
 }

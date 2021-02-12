@@ -251,3 +251,12 @@ pre {
   color: #0e101c;
   border-bottom: 2px solid !important;
 }
+
+.filter-input {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+.filter-input button, .filter-input input {
+  margin: 0;
+}

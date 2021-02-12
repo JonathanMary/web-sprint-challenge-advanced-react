@@ -52,7 +52,7 @@ test("form shows success message on submit with form details", () => {
     const checkAddress = wrapper.getByText(/Main Street/i);
     expect(checkAddress).toBeInTheDocument();
     expect(checkAddress).toBeVisible();
-    const place = wrapper.getByText(/Fond du Lac, Wisconsin 54937/i);
+    const place = wrapper.getByText(/Fond du Lac, Wisconsin 54936/i);
     expect(place).toBeInTheDocument();
     expect(place).toBeVisible();
 
